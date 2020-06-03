@@ -13,8 +13,8 @@ source:
   sha256: b7a1788004f6c6143d47040f2dd7d8a579a0c69a0cb0b5d7537416bf37c082a5
 
 build:
-  number: 0
-  skip: True  # [win]
+  number: 1
+  skip: True  # [win or py37]
 
 outputs:
   # A meta-package to select CPU or GPU pytorch_spline_conv build.
@@ -30,7 +30,7 @@ outputs:
   - name: pytorch_spline_conv
     version: {{ version }}
     build:
-      number: 0
+      number: 1
       script: python -m pip install . -vv
     requirements:
       build:
@@ -39,13 +39,13 @@ outputs:
         - {{ compiler('cuda') }}  # [linux and cuda_compiler_version != "None"]
       host:
         - python
-        - pytorch
+        - pytorch >=1.4
         - setuptools
         - pytest-runner
         - pip
       run:
         - python
-        - pytorch
+        - pytorch >=1.4
       run_constrained:
         - pytorch_spline_conv_proc * {{ pytorch_spline_conv_proc_type }}
     test:
