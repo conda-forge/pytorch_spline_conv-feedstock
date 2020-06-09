@@ -11,8 +11,12 @@ source:
 
 build:
   number: 3
-  skip: True  # [win]
-  script: {{ PYTHON }} -m pip install . -vv
+  skip: true  # [win or cuda_compiler_version == 'None' or cuda_compiler_version == '10.2']
+  script:
+    - export FORCE_CUDA="1"    # [linux64 and cuda_compiler_version != 'None']
+    - export CC="$GCC"   # [linux64 and cuda_compiler_version != 'None']
+    - export NVCC_FLAGS="--compiler-bindir=${CC}"    # [linux64 and cuda_compiler_version != 'None']
+    - {{ PYTHON }} -m pip install . -vv
 
 requirements:
   build:
@@ -30,9 +34,11 @@ requirements:
     - pytorch
     - pytest
     - pytest-cov
+
 test:
   imports:
     - torch_spline_conv
+    
 about:
   home: https://github.com/rusty1s/torch-spline-conv
   summary: Implementation of the Spline-Based Convolution Operator of SplineCNN in PyTorch
