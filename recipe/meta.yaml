@@ -1,5 +1,5 @@
 {% set name = "torch_spline_conv" %}
-{% set version = "1.2.0" %}
+{% set version = "1.2.1" %}
 
 package:
   name: py{{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b7a1788004f6c6143d47040f2dd7d8a579a0c69a0cb0b5d7537416bf37c082a5
+  sha256: 364f658e0ecb4c5263a728c2961553e022fc44c11a633d5a1bf986cf169ab438
 
 build:
-  number: 4
+  number: 0
   skip: true  # [win or cuda_compiler_version == 'None' or cuda_compiler_version == '10.2']
   script:
     - export FORCE_CUDA="1"    # [linux64 and cuda_compiler_version != 'None']
@@ -38,7 +38,7 @@ requirements:
 test:
   imports:
     - torch_spline_conv
-    
+
 about:
   home: https://github.com/rusty1s/torch-spline-conv
   summary: Implementation of the Spline-Based Convolution Operator of SplineCNN in PyTorch
