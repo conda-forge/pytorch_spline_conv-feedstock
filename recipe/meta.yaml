@@ -1,5 +1,7 @@
 {% set name = "torch_spline_conv" %}
 {% set version = "1.2.1" %}
+# see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
+{% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
 package:
   name: py{{ name|lower }}
@@ -12,9 +14,11 @@ source:
 build:
   number: 2
   skip: true  # [win or cuda_compiler_version == 'None' or cuda_compiler_version == '10.2']
+  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   script:
     - export FORCE_CUDA="1"    # [linux64 and cuda_compiler_version != 'None']
-    - export CC="$GCC"   # [linux64 and cuda_compiler_version != 'None']
+    - export CC="$GCC"         # [linux64 and cuda_compiler_version != 'None']
     - export NVCC_FLAGS="--compiler-bindir=${CC}"    # [linux64 and cuda_compiler_version != 'None']
     - {{ PYTHON }} -m pip install . -vv
 
@@ -22,7 +26,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - {{ compiler('cuda') }}  # [linux64 and cuda_compiler_version != "None"]
+    - {{ compiler('cuda') }}  # [cuda_compiler_version != "None"]
   host:
     - python
     - pytorch
@@ -31,9 +35,19 @@ requirements:
     - pip
   run:
     - python
-    - pytorch
     - pytest
     - pytest-cov
+  run_constrained:
+    # 2022/02/05 hmaarrfk
+    # While conda packaging seems to allow us to specify
+    # constraints on the same package in different lines
+    # the resulting package doesn't have the ability to
+    # be specified in multiples lines
+    # This makes it tricky to use run_exports
+    # we add the GPU constraint in the run_constrained
+    # to allow us to have "two" constraints on the
+    # running package
+    - pytorch =*={{ torch_proc_type }}*
 
 test:
   imports:
