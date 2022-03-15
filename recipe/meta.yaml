@@ -31,12 +31,6 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
-    # 2022/03/15 hmaarrfk
-    # Temporary restriction on the build number 
-    # to ensure that the most updated build gets used
-    # Build #1 has the correct pytorch pinnings
-    # Should be resolved in pytorch 1.11
-    - pytorch >=1.10.2=*_1,<1.11  # [pytorch == "1.10"]
     - setuptools
     - pytest-runner
     - pip
@@ -44,6 +38,11 @@ requirements:
     - python
     - pytest
     - pytest-cov
+    # 2022/03/15 hmaarrfk
+    # In some builds of pytorch 1.10, we didn't
+    # have the corect pinning in the feedstock's run_exports
+    # Add it manually here, but *just* for the version 1.10
+    - pytorch 1.10  # [pytorch == "1.10"]
   run_constrained:
     # 2022/02/05 hmaarrfk
     # While conda packaging seems to allow us to specify
