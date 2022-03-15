@@ -31,6 +31,12 @@ requirements:
     - python
     - pytorch
     - pytorch =*={{ torch_proc_type }}*
+    # 2022/03/15 hmaarrfk
+    # Temporary restriction on the build number 
+    # to ensure that the most updated build gets used
+    # Build #2 has the correct pytorch pinnings
+    # Should be resolved in pytorch 1.11
+    - pytorch >=1.10.2=*_2,<1.11  # [pytorch == "1.10"]
     - setuptools
     - pytest-runner
     - pip
