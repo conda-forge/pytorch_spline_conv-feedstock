@@ -36,8 +36,6 @@ requirements:
     - pip
   run:
     - python
-    - pytest
-    - pytest-cov
     # 2022/03/15 hmaarrfk
     # In some builds of pytorch 1.10, we didn't
     # have the corect pinning in the feedstock's run_exports
