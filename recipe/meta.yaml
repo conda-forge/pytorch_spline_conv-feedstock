@@ -36,11 +36,6 @@ requirements:
     - pip
   run:
     - python
-    # 2022/03/15 hmaarrfk
-    # In some builds of pytorch 1.10, we didn't
-    # have the corect pinning in the feedstock's run_exports
-    # Add it manually here, but *just* for the version 1.10
-    - pytorch 1.10  # [pytorch == "1.10"]
   run_constrained:
     # 2022/02/05 hmaarrfk
     # While conda packaging seems to allow us to specify
