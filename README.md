@@ -1,11 +1,11 @@
-About pytorch_spline_conv
-=========================
+About pytorch_spline_conv-feedstock
+===================================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/pytorch_spline_conv-feedstock/blob/main/LICENSE.txt)
 
 Home: https://github.com/rusty1s/pytorch_spline_conv
 
 Package license: MIT
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/pytorch_spline_conv-feedstock/blob/main/LICENSE.txt)
 
 Summary: Implementation of the Spline-Based Convolution Operator of SplineCNN in PyTorch
 
