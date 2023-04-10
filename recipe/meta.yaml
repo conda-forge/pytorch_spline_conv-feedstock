@@ -1,4 +1,4 @@
-{% set version = "1.2.1" %}
+{% set version = "1.2.2" %}
 # see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion
 {% set torch_proc_type = "cuda" if cuda_compiler_version != "None" else "cpu" %}
 
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/t/torch_spline_conv/torch_spline_conv-{{ version }}.tar.gz
-  sha256: 364f658e0ecb4c5263a728c2961553e022fc44c11a633d5a1bf986cf169ab438
+  sha256: ed45a81da29f774665dbdd4709d7e534cdf16d2e7006dbd06957f35bd09661b2
 
 build:
-  number: 6
+  number: 0
   # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see
   # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491
   skip: true  # [win or cuda_compiler_version in ("None", "10.2", "11.0", "11.1")]
