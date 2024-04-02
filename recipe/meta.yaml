@@ -14,7 +14,9 @@ build:
   number: 3
   # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see
   # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491
-  skip: true  # [win or cuda_compiler_version in ("None", "10.2", "11.0", "11.1")]
+  # skip python 3.8 due to build errors (and it's soon to be EOL)
+  # https://github.com/conda-forge/pytorch_spline_conv-feedstock/pull/35#issuecomment-2031134723
+  skip: true  # [win or py<39 or cuda_compiler_version in ("None", "10.2", "11.0", "11.1")]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   script:
