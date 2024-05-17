@@ -40,6 +40,7 @@ requirements:
     - setuptools
     - pytest-runner
     - pip
+    - libxcrypt               # [linux and py<39]
   run:
     - python
   run_constrained:
