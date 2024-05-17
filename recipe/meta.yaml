@@ -42,6 +42,9 @@ requirements:
     - setuptools
     - pytest-runner
     - pip
+    - libcublas-dev           # [(cuda_compiler_version or "").startswith("12")]
+    - libcusolver-dev         # [(cuda_compiler_version or "").startswith("12")]
+    - libcusparse-dev         # [(cuda_compiler_version or "").startswith("12")]
     - libxcrypt               # [linux and py<39]
   run:
     - python
