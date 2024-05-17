@@ -17,10 +17,7 @@ build:
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   script:
     - export FORCE_CUDA="1"                         # [linux64 and cuda_compiler_version != 'None']
-    # strip out flags not recognized by nvcc; ordering given by compiler activation in
-    # https://github.com/conda-forge/ctng-compiler-activation-feedstock/blob/main/recipe/conda_build_config.yaml
-    - export CFLAGS="$(echo $CFLAGS | sed 's/-march=nocona -mtune=haswell //g')"  # [linux64 and cuda_compiler_version != 'None']
-    - export CC="$GCC $CFLAGS $CPPFLAGS"            # [linux64 and cuda_compiler_version != 'None']
+    - export CC="$GCC -I$PREFIX/include"            # [linux64 and cuda_compiler_version != 'None']
     - export NVCC_FLAGS="--compiler-bindir=${CC}"   # [linux64 and cuda_compiler_version != 'None']
     # needs to be set or builds fails because _get_cuda_arch_flags from
     # https://github.com/pytorch/pytorch/blob/v2.0.0/torch/utils/cpp_extension.py#L1710
