@@ -11,7 +11,7 @@ source:
   sha256: ed45a81da29f774665dbdd4709d7e534cdf16d2e7006dbd06957f35bd09661b2
 
 build:
-  number: 3
+  number: 4
   skip: true  # [win]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
@@ -22,7 +22,8 @@ build:
     # needs to be set or builds fails because _get_cuda_arch_flags from
     # https://github.com/pytorch/pytorch/blob/v2.0.0/torch/utils/cpp_extension.py#L1710
     # will try to determine the arches based on the non-existent-in-CI CUDA drivers
-    - export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"  # [linux64 and cuda_compiler_version != 'None']
+    - export TORCH_CUDA_ARCH_LIST="3.5;5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9+PTX"  # [linux and cuda_compiler_version == "11.8"]
+    - export TORCH_CUDA_ARCH_LIST="5.0;6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0+PTX"  # [linux and (cuda_compiler_version or "").startswith("12")]
     - {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -41,6 +42,9 @@ requirements:
     - setuptools
     - pytest-runner
     - pip
+    - libcublas-dev           # [(cuda_compiler_version or "").startswith("12")]
+    - libcusolver-dev         # [(cuda_compiler_version or "").startswith("12")]
+    - libcusparse-dev         # [(cuda_compiler_version or "").startswith("12")]
     - libxcrypt               # [linux and py<39]
   run:
     - python
