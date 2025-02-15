@@ -7,12 +7,14 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/t/torch_spline_conv/torch_spline_conv-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/t/torch_spline_conv/torch_spline_conv-{{ version }}.tar.gz
   sha256: ed45a81da29f774665dbdd4709d7e534cdf16d2e7006dbd06957f35bd09661b2
 
 build:
-  number: 7
+  number: 8
   skip: true  # [win]
+  # pytorch in conda-forge does not support CUDA 11.8 as of v2.5
+  skip: true  # [cuda_compiler_version == "11.8"]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
   script:
