@@ -11,7 +11,7 @@ source:
   sha256: ed45a81da29f774665dbdd4709d7e534cdf16d2e7006dbd06957f35bd09661b2
 
 build:
-  number: 8
+  number: 9
   skip: true  # [win]
   # pytorch in conda-forge does not support CUDA 11.8 as of v2.5
   skip: true  # [cuda_compiler_version == "11.8"]
@@ -40,7 +40,7 @@ requirements:
   host:
     - python
     - pytorch
-    - pytorch =*={{ torch_proc_type }}*
+    - pytorch * {{ torch_proc_type }}*
     - setuptools
     - pytest-runner
     - pip
@@ -53,7 +53,7 @@ requirements:
   run_constrained:
     # additional run constraint to the one from the (version-only) run_export;
     # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner
-    - pytorch =*={{ torch_proc_type }}*
+    - pytorch * {{ torch_proc_type }}*
 
 test:
   imports:
