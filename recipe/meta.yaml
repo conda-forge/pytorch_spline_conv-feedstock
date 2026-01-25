@@ -41,9 +41,9 @@ requirements:
     - setuptools
     - pytest-runner
     - pip
-    - libcublas-dev           # [(cuda_compiler_version or "").startswith("12")]
-    - libcusolver-dev         # [(cuda_compiler_version or "").startswith("12")]
-    - libcusparse-dev         # [(cuda_compiler_version or "").startswith("12")]
+    - libcublas-dev           # [cuda_compiler_version != "None"]
+    - libcusolver-dev         # [cuda_compiler_version != "None"]
+    - libcusparse-dev         # [cuda_compiler_version != "None"]
   run:
     - python
   run_constrained:
