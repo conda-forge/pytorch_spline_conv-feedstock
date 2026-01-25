@@ -11,7 +11,7 @@ source:
   sha256: ed45a81da29f774665dbdd4709d7e534cdf16d2e7006dbd06957f35bd09661b2
 
 build:
-  number: 11
+  number: 12
   skip: true  # [win]
   string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
@@ -41,10 +41,9 @@ requirements:
     - setuptools
     - pytest-runner
     - pip
-    - libcublas-dev           # [(cuda_compiler_version or "").startswith("12")]
-    - libcusolver-dev         # [(cuda_compiler_version or "").startswith("12")]
-    - libcusparse-dev         # [(cuda_compiler_version or "").startswith("12")]
-    - libxcrypt               # [linux and py<39]
+    - libcublas-dev           # [cuda_compiler_version != "None"]
+    - libcusolver-dev         # [cuda_compiler_version != "None"]
+    - libcusparse-dev         # [cuda_compiler_version != "None"]
   run:
     - python
   run_constrained:
